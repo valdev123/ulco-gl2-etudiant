@@ -8,6 +8,7 @@ int fiboNaive(int n) {
 // implement fiboIterative
 
 int fiboIterative(int n) {
+    assert(n => 0);
     if (n == 0) return 0;
     else{
         if (n == 1) return 1;
