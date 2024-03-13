@@ -11,24 +11,19 @@ void Canevas::ajouterRectangle(int largeur, int hauteur) {
     _formes.push_back(std::make_unique<Rectangle>(largeur, hauteur));
 }
 
-double Canevas::aireForme(const Forme * f) const {
-
-    auto disque = dynamic_cast<const Disque*>(f);
-    if (disque)
-        return disque->_rayon * 2 * M_PI;
-
-    auto rectangle = dynamic_cast<const Rectangle*>(f);
-    if (rectangle)
-        return rectangle->_largeur * rectangle->_hauteur;
-
-    return 0;
-}
-
 double Canevas::aireTotale() const {
     double res = 0.0;
     for (const auto & f : _formes)
-        res += aireForme(f.get());
+        res += f.get()->aire();
     return res;
+}
+
+const std::vector<Description> Canevas::descriptions() const {
+    std::vector<Description> descriptions;
+    for (const auto & f : _formes){
+        descriptions.push_back(f.get()->toDescription());
+    }
+    return descriptions;
 }
 
 void Canevas::exportFormeYAML(std::ostream & os, const Forme * f) const {
@@ -42,9 +37,10 @@ void Canevas::exportFormeYAML(std::ostream & os, const Forme * f) const {
 
     auto rectangle = dynamic_cast<const Rectangle*>(f);
     if (rectangle) {
+        auto desc = rectangle->toDescription();
         os << "- name: \"Rectangle\"\n";
-        os << "  largeur: \"" << rectangle->_largeur << "\"\n";;
-        os << "  hauteur: \"" << rectangle->_hauteur << "\"\n";;
+        os << "  largeur: \"" << desc["largeur"] << "\"\n";;
+        os << "  hauteur: \"" << desc["hauteur"] << "\"\n";;
         return;
     }
 
