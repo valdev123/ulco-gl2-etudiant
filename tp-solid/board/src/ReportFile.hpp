@@ -1,14 +1,16 @@
 #pragma once
 
 #include "fstream"
-#include "Board.hpp"
 
-class ReportFile {
+#include "Reportable.hpp"
+
+class ReportFile : public Reportable{
     public :
 
     ReportFile(const std::string& fileName) : _ofs(fileName) {}
 
-    void reportFile(const Board & b) {
+    void report(const Board & b) override{
+        _ofs << b.getTitle() << std::endl;
         for (const std::string & item : b.getItems())
             _ofs << item << std::endl;
         _ofs << std::endl;

@@ -2,38 +2,36 @@
 #include "Board.hpp"
 #include "ReportStdout.hpp"
 #include "ReportFile.hpp"
+#include "Reportable.hpp"
 #include "NumBoard.hpp"
 
-void testBoard(Board & b) {
-    std::cout << b.getTitle() << std::endl;
+void testBoard(Board & b, Reportable& r) {
     b.add("item 1");
     b.add("item 2");
 
-    ReportStdout rso;
-    rso.reportStdout(b);
-
-    ReportFile rf("testBoard.txt");
-    rf.reportFile(b);
+    r.report(b);
 }
 
-void testNumBoard(NumBoard & nb) {
-    std::cout << nb.getTitle() << std::endl;
+void testNumBoard(NumBoard & nb, Reportable& r) {
     nb.addNum("item 1");
     nb.addNum("item 2");
 
     ReportStdout rso;
-    rso.reportStdout(nb);
+    r.report(nb);
 }
 
 int main() {
 
     Board b1;
-    testBoard(b1);
+    ReportStdout r1;
+
+    testBoard(b1, r1);
 
     NumBoard nb;
-    testNumBoard(nb);
+    ReportFile r2("test2.txt");
+    testNumBoard(nb,r2);
 
-    testBoard(nb);
+    testBoard(nb,r1);
 
     return 0;
 }
