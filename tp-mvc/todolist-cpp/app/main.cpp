@@ -10,10 +10,11 @@ int main() {
     std::cout << showTask(t) << std::endl;
 
     Board b;
-    std::string desc1 = "Faire son TP de GL";
-    b.addTodo(desc1);
-    std::cout << "Board :" << std::endl;
-    std::cout << showTask(b._todo.back()) << std::endl;
+    std::string desc = "Faire son TP de GL";
+    b.addTodo(desc);
+    desc = "Faire son 2ème TP de GL";
+    b.addTodo(desc);
+    printBoard(std::cout,b);
 
     return 0;
 }
