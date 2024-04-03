@@ -3,21 +3,38 @@
 #include <todolist-cpp/Board.hpp>
 
 #include <iostream>
+#include <sstream>
 
 int main() {
-
-    Task t {1, "TODO"};
-    std::cout << showTask(t) << std::endl;
-
     Board b;
-    std::string desc = "Faire son TP de GL";
-    b.addTodo(desc);
-    desc = "Faire son 2ème TP de GL";
-    b.addTodo(desc);
-    desc = "Faire son 3ème TP de GL";
-    b.addTodo(desc);
-    b.toDone(2);
-    printBoard(std::cout,b);
+    std::string input, cmd, rst;
+    while(true){
+        printBoard(std::cout,b);
+        std::getline(std::cin,input);
+        std::istringstream iss(input);
+        std::getline(iss, cmd, ' ');
+        std::getline(iss, rst);
+
+        if(cmd == "add" and rst != ""){
+            b.addTodo(rst);
+        }
+        else if(cmd == "done" and rst != ""){
+            bool is_digit = true;
+            for(char i : rst){
+                if(!std::isdigit(i)){
+                    is_digit = false;
+                    break;
+                }
+            }
+            if(is_digit){
+                b.toDone(std::stoi(rst));
+            }
+        }
+        else if(cmd == "quit"){
+            break;
+        }
+
+    }
 
     return 0;
 }
