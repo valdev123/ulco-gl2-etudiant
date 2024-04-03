@@ -14,6 +14,9 @@ int main() {
     b.addTodo(desc);
     desc = "Faire son 2ème TP de GL";
     b.addTodo(desc);
+    desc = "Faire son 3ème TP de GL";
+    b.addTodo(desc);
+    b.toDone(2);
     printBoard(std::cout,b);
 
     return 0;

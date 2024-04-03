@@ -27,3 +27,41 @@ TEST_CASE( "test addTodo" ) {
     REQUIRE( b._todo.back()._id == 2);
     REQUIRE( b._todo.back()._name == desc);
 }
+
+TEST_CASE( "test toDone empty" ) {
+    Board b;
+    b.toDone(5);
+    REQUIRE( b._done.empty() == true );
+}
+
+TEST_CASE( "test toDone 1 elm" ) {
+    Board b;
+    b.addTodo("test 1");
+    int size = b._todo.size();
+    b.toDone(1);
+    REQUIRE( size == 1 );
+    REQUIRE( b._done.size() == 1 );
+    REQUIRE( b._done.back()._id == 1 );
+    REQUIRE( b._done.back()._name == "test 1" );
+    REQUIRE( b._todo.size() == size-1);
+}
+
+TEST_CASE( "test toDone 2 elm" ) {
+    Board b;
+    b.addTodo("test 1");
+    b.addTodo("test 2");
+    int size = b._todo.size();
+    
+    b.toDone(1);
+    REQUIRE( size == 2 );
+    REQUIRE( b._done.size() == 1 );
+    REQUIRE( b._done.back()._id == 1 );
+    REQUIRE( b._done.back()._name == "test 1" );
+    REQUIRE( b._todo.size() == size-1);
+
+    b.toDone(2);
+    REQUIRE( b._done.size() == 2 );
+    REQUIRE( b._done.back()._id == 2 );
+    REQUIRE( b._done.back()._name == "test 2" );
+    REQUIRE( b._todo.size() == size-2);
+}

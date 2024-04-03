@@ -15,4 +15,6 @@ class Board {
         Board();
         int getNextId(){ return _nextId; }
         void addTodo(std::string);
+        void toDone(int);
+
 };
