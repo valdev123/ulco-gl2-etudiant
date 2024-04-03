@@ -15,6 +15,15 @@ TEST_CASE( "test addTodo" ) {
     b.addTodo(desc);
     REQUIRE( b.getNextId() == 2 );
     REQUIRE( b._todo.empty() == false );
+    REQUIRE( b._todo.size() == 1 );
     REQUIRE( b._todo.back()._id == 1);
+    REQUIRE( b._todo.back()._name == desc);
+
+    desc = "Faire ton 2ème TP de GL";
+    b.addTodo(desc);
+    REQUIRE( b.getNextId() == 3 );
+    REQUIRE( b._todo.empty() == false );
+    REQUIRE( b._todo.size() == 2 );
+    REQUIRE( b._todo.back()._id == 2);
     REQUIRE( b._todo.back()._name == desc);
 }
