@@ -23,7 +23,7 @@ TEST_CASE( "test printBoard 1 elm" ) {
     b.addTodo(desc);
     std::ostringstream oss;
     printBoard(oss,b);
-    auto expected = "Board :\n1. test 1\n";
+    auto expected = "Board :\n\tTodo :\n\t\t1. test 1\n";
     REQUIRE( oss.str() == expected );
 }
 
@@ -33,8 +33,9 @@ TEST_CASE( "test printBoard 2 elm" ) {
     b.addTodo(desc);
     desc = "test 2";
     b.addTodo(desc);
+    b.toDone(1);
     std::ostringstream oss;
     printBoard(oss,b);
-    auto expected = "Board :\n1. test 1\n2. test 2\n";
+    auto expected = "Board :\n\tTodo :\n\t\t2. test 2\n\tDone :\n\t\t1. test 1\n";
     REQUIRE( oss.str() == expected );
 }

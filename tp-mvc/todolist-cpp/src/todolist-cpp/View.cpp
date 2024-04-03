@@ -7,7 +7,17 @@ std::string showTask(const Task &t){
 
 void printBoard(std::ostream & ofs, const Board &b){
     ofs << "Board :\n";
-    for(auto i : b._todo){
-        ofs << showTask(i) << "\n";
+    
+    if(!b._todo.empty()){
+        ofs << "\tTodo :\n";
+        for(auto i : b._todo){
+            ofs << "\t\t" << showTask(i) << "\n";
+        } 
+    }
+    if(!b._done.empty()){
+        ofs << "\tDone :\n";
+        for(auto i : b._done){
+            ofs << "\t\t" << showTask(i) << "\n";
+        } 
     }
 }
