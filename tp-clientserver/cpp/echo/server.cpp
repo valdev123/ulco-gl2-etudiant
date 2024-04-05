@@ -16,7 +16,9 @@ int main() {
         std::cout << "client disconnected" << std::endl;
     };
 
-    hv::WebSocketServer server(&ws);
+
+    hv::WebSocketServer server;
+    server.registerWebSocketService(&ws);
     server.setPort(9000);
     std::cout << "waiting for clients..." << std::endl;
     server.run();
