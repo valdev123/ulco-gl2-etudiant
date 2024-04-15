@@ -12,7 +12,7 @@ enum class Cell { Vide, Rouge, Vert };
 class Jeu {
     private:
         std::array<std::array<Cell, 3>, 3> _plateau;
-        // TODO
+        bool _player;
 
     public:
         // Constructeur à utiliser.
@@ -23,6 +23,12 @@ class Jeu {
 
         // Retourne l'état d'une case du plateau
         Cell getCell(int i, int j) const;
+
+        bool line_win() const;
+        bool col_win() const;
+        bool diag_win() const;
+        bool win() const;
+        bool is_full() const;
 
         // Joue un coup pour le joueur courant.
         // 

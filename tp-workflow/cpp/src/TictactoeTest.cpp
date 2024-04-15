@@ -27,4 +27,9 @@ TEST_CASE("affichage de la grille"){
     REQUIRE(ss.str() == res);
 }
 
+TEST_CASE("get status v1"){
+    Jeu game;
+    game.getStatus();
+}
+
 
