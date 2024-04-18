@@ -5,6 +5,7 @@ Jeu::Jeu() {
     raz();
 }
 
+/*
 bool Jeu::line_win() const {
     Cell first_c;
     // check si une ligne est gagnante
@@ -71,6 +72,7 @@ bool Jeu::is_full() const {
     }
     return true;
 }
+*/
 
 Status Jeu::getStatus() const {
     /*
@@ -91,21 +93,10 @@ Status Jeu::getStatus() const {
     }
 }
 
-/** \brief retourne la valeur de la cellule dans le jeu
- * 
- *  \param i indice ligne du plateau de jeu
- *  \param j indice colonne du plateau de jeu
-*/
 Cell Jeu::getCell(int i, int j) const {
     return _plateau[i][j];
 }
 
-/** \brief retourne le plateau de jeu dans un flux
- * 
- *  \details on peut utiliser ce résultat pour l'afficher en console
- *  \param os le flux
- *  \param jeu le jeu
-*/
 std::ostream & operator<<(std::ostream & os, const Jeu & jeu) {
     for(auto i = 0;i < 3; i++){
         for(auto j = 0; j < 3; j++){
@@ -131,9 +122,20 @@ std::ostream & operator<<(std::ostream & os, const Jeu & jeu) {
     return os;
 }
 
+bool Jeu::isValidCase(int i, int j) const {
+    return i >= 0 and i <= 2 and j >= 0 and j <= 2; 
+}
+
+bool Jeu::isEmptyCell(int i, int j) const {
+    return getCell(i,j) == Cell::Vide;
+}
+
 bool Jeu::jouer(int i, int j) {
-    Status s = getStatus();
-    if(getCell(i,j) == Cell::Vide){
+    if(!isValidCase(i,j)){
+        return false;
+    }
+    if(isEmptyCell(i,j)){
+        Status s = getStatus();
         if(s == Status::RougeJoue){
             _plateau[i][j] = Cell::Rouge;
         }
@@ -146,9 +148,6 @@ bool Jeu::jouer(int i, int j) {
     return false;
 }
 
-/** \brief réinialise le jeu
- * 
-*/
 void Jeu::raz() {
     _player = false;
     for(auto i = 0;i < 3;i++){

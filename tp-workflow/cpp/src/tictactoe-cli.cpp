@@ -14,6 +14,8 @@ int main() {
     jeu.jouer(1,1);
     jeu.jouer(0,1);
     jeu.jouer(0,2);
+    jeu.jouer(0,7);
+    jeu.jouer(2,2);
 
     std::cout << jeu;
 

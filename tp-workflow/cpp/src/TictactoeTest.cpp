@@ -19,7 +19,7 @@ TEST_CASE("raz"){
     }
 }
 
-TEST_CASE("affichage de la grille"){
+TEST_CASE("affichage de la grille vide"){
     Jeu game;
     std::stringstream ss;
     ss << game;
@@ -29,7 +29,48 @@ TEST_CASE("affichage de la grille"){
 
 TEST_CASE("get status v1"){
     Jeu game;
-    game.getStatus();
+    REQUIRE(game.getStatus() == Status::RougeJoue);
+    
+}
+
+TEST_CASE("get status v2"){
+    Jeu game;
+    game.jouer(1,1); // coup valide donc on change le joueur courant
+    REQUIRE(game.getStatus() == Status::VertJoue);
+}
+
+TEST_CASE("get status v3"){
+    Jeu game;
+    game.jouer(1,1); // coup valide donc on change le joueur courant
+    game.jouer(1,1); // coup non valide donc on ne change pas le joueur courant
+    REQUIRE(game.getStatus() == Status::VertJoue);
+}
+
+TEST_CASE("jouer position inivalide"){
+    Jeu game;
+    bool res = game.jouer(-1,-1);
+    REQUIRE(!res);
+}
+
+TEST_CASE("jouer position vide"){
+    Jeu game;
+    bool res = game.jouer(1,1);
+    std::stringstream ss;
+    ss << game;
+    std::string res_plateau = "...\n.R.\n...\n";
+    REQUIRE(res);
+    REQUIRE(ss.str() == res_plateau);
+}
+
+TEST_CASE("jouer position non vide"){
+    Jeu game;
+    game.jouer(1,1);
+    bool res = game.jouer(1,1);
+    std::stringstream ss;
+    ss << game;
+    std::string res_plateau = "...\n.R.\n...\n";
+    REQUIRE(!res);
+    REQUIRE(ss.str() == res_plateau);
 }
 
 
