@@ -46,7 +46,9 @@ class Jeu {
         */
         bool win() const;
 
-        //bool isFull() const;
+        /** \brief retourne si le jeu est rempli
+        */
+        bool isFull() const;
         
 
         /** \brief Vérifie si une case est valide

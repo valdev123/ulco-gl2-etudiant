@@ -44,6 +44,9 @@ int main() {
     if(game.getStatus() == Status::VertGagne){
         std::cout << "vert gagne" << std::endl;
     }
+    if(game.getStatus() == Status::Egalite){
+        std::cout << "égalité" << std::endl;
+    }
 
     return 0;
 }

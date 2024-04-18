@@ -69,8 +69,8 @@ bool Jeu::win() const {
     return lineWin() or colWin() or diagWin();
 }
 
-/*
-bool Jeu::is_full() const {
+
+bool Jeu::isFull() const {
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             if(getCell(i,j) == Cell::Vide){
@@ -80,7 +80,7 @@ bool Jeu::is_full() const {
     }
     return true;
 }
-*/
+
 
 Status Jeu::getStatus() const {
     return _status;
@@ -134,12 +134,27 @@ bool Jeu::jouer(int i, int j) {
                 _status = Status::RougeGagne;
             }
             else{
-                _status = Status::VertJoue;
+                if(isFull()){
+                    _status = Status::Egalite;
+                }
+                else {
+                    _status = Status::VertJoue;
+                }
             }
         }
         else if (_status == Status::VertJoue){
             _plateau[i][j] = Cell::Vert;
-            _status = Status::RougeJoue;
+            if(win()){
+                _status = Status::VertGagne;
+            }
+            else{
+                if(isFull()){
+                    _status = Status::Egalite;
+                }
+                else {
+                    _status = Status::RougeJoue;
+                }
+            }
         }
         return true;
     }
