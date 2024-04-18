@@ -3,71 +3,79 @@
 
 Jeu::Jeu() {
     raz();
+    _status = Status::RougeJoue;
 }
 
-/*
-bool Jeu::line_win() const {
-    Cell first_c;
+bool Jeu::lineWin() const {
     // check si une ligne est gagnante
-    for(int i = 0;i < 3;i++){
-        first_c = getCell(i,0);
-        int cpt(1);
-        for(int j = 1; j < 3; j++){
-            if(getCell(i,j) == first_c){
-                cpt++;
-            }
-            else{
-                break;
-            }
+    if(getCell(0,0) == getCell(0,1) and getCell(0,0) == getCell(0,2)){
+        if (getCell(0,0) != Cell::Vide){
+            return true;
         }
-        if(cpt == 3){
+    }
+
+    if(getCell(1,0) == getCell(1,1) and getCell(1,0) == getCell(1,2)){
+        if (getCell(1,0) != Cell::Vide){
+            return true;
+        }
+    }
+
+    if(getCell(2,0) == getCell(2,1) and getCell(2,0) == getCell(2,2)){
+        if (getCell(2,0) != Cell::Vide){
             return true;
         }
     }
     return false;
 }
 
-bool Jeu::col_win() const {
-    Cell first_c;
+bool Jeu::colWin() const {
     // check si un colonne est gagnante
-    for(int i = 0;i < 3;i++){
-        first_c = getCell(0,i);
-        int cpt(1);
-        for(int j = 1; j < 3; j++){
-            if(getCell(j,i) == first_c){
-                cpt++;
-            }
-            else{
-                break;
-            }
-        }
-        if(cpt == 3){
+    if(getCell(0,0) == getCell(1,0) and getCell(0,0) == getCell(2,0)){
+        if (getCell(0,0) != Cell::Vide){
             return true;
         }
     }
+
+    if(getCell(0,1) == getCell(1,1) and getCell(0,1) == getCell(2,1)){
+        if (getCell(0,1) != Cell::Vide){
+            return true;
+        }
+    }
+
+    if(getCell(0,2) == getCell(1,2) and getCell(0,2) == getCell(2,2)){
+        if (getCell(0,2) != Cell::Vide){
+            return true;
+        }
+    }
+    return false;
 }
 
-bool Jeu::diag_win() const {
+bool Jeu::diagWin() const {
     // check si une diagonale est gagnante
     Cell first_c = getCell(1,1);
-    if(first_c == getCell(0,0) and first_c == getCell(2,2)){
-        return true;
-    }
-    else if(first_c == getCell(0,2) and first_c == getCell(2,0)){
-        return true;
+    if (first_c != Cell::Vide){
+        if(first_c == getCell(0,0) and first_c == getCell(2,2)){
+            return true;
+        }
+        else if(first_c == getCell(0,2) and first_c == getCell(2,0)){
+            return true;
+        }
     }
     return false; 
 }
 
 
 bool Jeu::win() const {
-    return line_win() or col_win() or diag_win();
+    return lineWin() or colWin() or diagWin();
 }
 
+/*
 bool Jeu::is_full() const {
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
-
+            if(getCell(i,j) == Cell::Vide){
+                return false;
+            }
         }
     }
     return true;
@@ -75,22 +83,7 @@ bool Jeu::is_full() const {
 */
 
 Status Jeu::getStatus() const {
-    /*
-    if(win()){
-        if(_player){
-            return Status::RougeGagne;
-        }
-        else{
-            return Status::VertGagne;
-        }
-    }
-    */
-    if(_player){
-        return Status::VertJoue;
-    }
-    else{
-        return Status::RougeJoue;
-    }
+    return _status;
 }
 
 Cell Jeu::getCell(int i, int j) const {
@@ -135,14 +128,19 @@ bool Jeu::jouer(int i, int j) {
         return false;
     }
     if(isEmptyCell(i,j)){
-        Status s = getStatus();
-        if(s == Status::RougeJoue){
+        if(_status == Status::RougeJoue){
             _plateau[i][j] = Cell::Rouge;
+            if(win()){
+                _status = Status::RougeGagne;
+            }
+            else{
+                _status = Status::VertJoue;
+            }
         }
-        else{
+        else if (_status == Status::VertJoue){
             _plateau[i][j] = Cell::Vert;
+            _status = Status::RougeJoue;
         }
-        _player = !_player;
         return true;
     }
     return false;

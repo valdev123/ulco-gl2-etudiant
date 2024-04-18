@@ -7,17 +7,43 @@ int main() {
 
     cout << "TODO" << endl;
 
-    Jeu jeu;
+    Jeu game;
 
-    std::cout << jeu << std::endl;
+    game.raz();
+    while(game.getStatus() != Status::RougeGagne and game.getStatus() != Status::VertGagne){
+        std::cout << game << std::endl;
+        switch (game.getStatus())
+        {
+        case Status::RougeJoue:
+            std::cout << "rouge joue" << std::endl;
+            break;
 
-    jeu.jouer(1,1);
-    jeu.jouer(0,1);
-    jeu.jouer(0,2);
-    jeu.jouer(0,7);
-    jeu.jouer(2,2);
+        case Status::VertJoue:
+            std::cout << "vert joue" << std::endl;
+            break;
+        
+        case Status::Egalite:
+            std::cout << "egalité" << std::endl;
+            break;
+        
+        default:
+            break;
+        }
+        int i;
+        int j;
+        std::cout << "entrer un coup (i j) : ";
+        std::cin >> i >> j;
+        game.jouer(i,j);
+    }
+    std::cout << game;
+    
 
-    std::cout << jeu;
+    if(game.getStatus() == Status::RougeGagne){
+        std::cout << "rouge gagne" << std::endl;
+    }
+    if(game.getStatus() == Status::VertGagne){
+        std::cout << "vert gagne" << std::endl;
+    }
 
     return 0;
 }

@@ -12,6 +12,15 @@ TEST_CASE("getCell"){
 TEST_CASE("raz"){
     Jeu game;
     game.raz();
+    REQUIRE(game.getStatus() == Status::RougeJoue);
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            REQUIRE(game.getCell(i,j) == Cell::Vide);
+        }
+    }
+    game.jouer(0,1);
+    game.raz();
+    REQUIRE(game.getStatus() == Status::RougeJoue);
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             REQUIRE(game.getCell(i,j) == Cell::Vide);
@@ -73,4 +82,110 @@ TEST_CASE("jouer position non vide"){
     REQUIRE(ss.str() == res_plateau);
 }
 
+TEST_CASE("ligne win"){
+    Jeu game;
+    game.jouer(0,0);
+    game.jouer(1,0);
+    game.jouer(0,1);
+    game.jouer(1,1);
+    game.jouer(0,2);
+    REQUIRE(game.lineWin());
+    game.raz();
+    game.jouer(1,0);
+    game.jouer(0,0);
+    game.jouer(1,1);
+    game.jouer(0,1);
+    game.jouer(1,2);
+    REQUIRE(game.lineWin());
+    game.raz();
+    game.jouer(2,0);
+    game.jouer(1,0);
+    game.jouer(2,1);
+    game.jouer(1,1);
+    game.jouer(2,2);
+    REQUIRE(game.lineWin());
+    game.raz();
+    game.jouer(2,0);
+    game.jouer(1,0);
+    game.jouer(2,1);
+    game.jouer(1,1);
+    game.jouer(1,2);
+    std::cout << game;
+    REQUIRE(!game.lineWin());
+}
+
+TEST_CASE("col win"){
+    Jeu game;
+    game.jouer(0,0);
+    game.jouer(1,1);
+    game.jouer(1,0);
+    game.jouer(1,2);
+    game.jouer(2,0);
+    REQUIRE(game.colWin());
+    game.raz();
+    game.jouer(0,1);
+    game.jouer(1,0);
+    game.jouer(1,1);
+    game.jouer(1,2);
+    game.jouer(2,1);
+    REQUIRE(game.colWin());
+    game.raz();
+    game.jouer(0,2);
+    game.jouer(1,1);
+    game.jouer(1,2);
+    game.jouer(1,0);
+    game.jouer(2,2);
+    REQUIRE(game.colWin());
+    game.raz();
+    game.jouer(0,2);
+    game.jouer(1,1);
+    game.jouer(1,2);
+    game.jouer(1,0);
+    game.jouer(2,0);
+    REQUIRE(!game.colWin());
+}
+
+
+TEST_CASE("diag win"){
+    Jeu game;
+    game.raz();
+    game.jouer(0,0);
+    game.jouer(1,0);
+    game.jouer(1,1);
+    game.jouer(0,1);
+    game.jouer(2,2);
+    REQUIRE(game.diagWin());
+    game.raz();
+    game.jouer(0,2);
+    game.jouer(1,0);
+    game.jouer(1,1);
+    game.jouer(0,1);
+    game.jouer(2,0);
+    REQUIRE(game.diagWin());
+    game.raz();
+    game.jouer(0,2);
+    game.jouer(1,0);
+    game.jouer(1,1);
+    game.jouer(0,1);
+    game.jouer(2,1);
+    REQUIRE(!game.diagWin());
+}
+
+TEST_CASE("win"){
+    Jeu game;
+    game.raz();
+    game.jouer(0,0);
+    game.jouer(1,0);
+    game.jouer(1,1);
+    game.jouer(0,1);
+    game.jouer(2,2);
+    REQUIRE(game.win());
+    game.raz();
+    game.jouer(0,0);
+    game.jouer(1,0);
+    game.jouer(1,1);
+    game.jouer(0,1);
+    game.jouer(2,1);
+    REQUIRE(!game.win());
+}
 

@@ -13,12 +13,14 @@ class Jeu {
     private:
         std::array<std::array<Cell, 3>, 3> _plateau;
         bool _player;
+        Status _status;
 
     public:
         // Constructeur à utiliser.
         Jeu();
 
-        // Retourne le status du jeu courant (Egalite, RougeGagne, VertGagne, RougeJoue, VertJoue).
+        /** \brief Retourne le status du jeu courant (Egalite, RougeGagne, VertGagne, RougeJoue, VertJoue).
+        */
         Status getStatus() const;
 
         /** \brief retourne l'état d'une case dans le jeu
@@ -28,13 +30,24 @@ class Jeu {
         */
         Cell getCell(int i, int j) const;
 
-        /*
-        bool line_win() const;
-        bool col_win() const;
-        bool diag_win() const;
-        bool win() const;
-        bool is_full() const;
+        /** \brief retourne vrai si une ligne donne la victoire
         */
+        bool lineWin() const;
+
+        /** \brief retourne vrai si une colonne donne la victoire
+        */
+        bool colWin() const;
+
+        /** \brief retourne vrai si une diagonale donne la victoire
+        */
+        bool diagWin() const;
+
+        /** \brief retourne s'il y a une victoire
+        */
+        bool win() const;
+
+        //bool isFull() const;
+        
 
         /** \brief Vérifie si une case est valide
          * 
